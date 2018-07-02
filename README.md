@@ -4,13 +4,13 @@ Dogbi - breed identifier messenger bot for Facebook &amp; Telegram</br>
 *Fill out const_empty in telegram_bot and fb_bot directories and rename them to const</br>
 *Generate a legit secret key for settings_without_key (add SECRET_KEY = 'YOUR KEY') and rename it to settings </br>
 
-*Pull a graph from: https://drive.google.com/open?id=1jwaqv_7jZHbY2Wegr5toMlLnAScfG4_O </br>
+*Pull a graph from: https://drive.google.com/file/d/1jwaqv_7jZHbY2Wegr5toMlLnAScfG4_O/view?usp=sharing </br>
 *Place the graph in AI directory
 
-*Pull a .csv from: https://drive.google.com/open?id=14dt8YGXpDmVDkmgw64igYGTj4I3wFFtV </br>
+*Pull a .csv from: https://drive.google.com/file/d/14dt8YGXpDmVDkmgw64igYGTj4I3wFFtV/view?usp=sharing </br>
 *Place the csv doc in AI directory
 
-*Pull static from: https://drive.google.com/open?id=1mVaxgJMeuG_wAh8VNoXuJ12avauEnTX9 </br>
+*Pull static from: https://drive.google.com/drive/folders/1mVaxgJMeuG_wAh8VNoXuJ12avauEnTX9?usp=sharing </br>
 *Place the static dir in AI directory
 
 *Run config.py in telegram_bot directory to set the </br>
