@@ -29,6 +29,7 @@ dog_bot/settings.py
 AI/static/*
 AI/stanford_5_64_0001.pb
 AI/breeds.csv
+.idea/dog_bot.iml
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
