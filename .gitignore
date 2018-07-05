@@ -30,6 +30,9 @@ AI/static/*
 AI/stanford_5_64_0001.pb
 AI/breeds.csv
 .idea/dog_bot.iml
+dogbi/*
+
+
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
