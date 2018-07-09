@@ -1,2 +1,2 @@
 from . import classify_singleton
-from . import classify
+from . import image

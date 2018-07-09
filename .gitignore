@@ -31,6 +31,7 @@ AI/stanford_5_64_0001.pb
 AI/breeds.csv
 .idea/dog_bot.iml
 dogbi/*
+.db/*
 
 
 
