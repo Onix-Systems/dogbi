@@ -10,5 +10,5 @@ tensorflow
 pandas
 sklearn
 scipy
-Pillow==5.1.0
-
+Pillow
+face_recognition

@@ -80,7 +80,7 @@ class BotView(generic.View):
                     )
                     response = self.analyzer.get_score(path)
                     try:
-                        merged_image = merge(path, response[0][0].replace(' ', '_'), user.user_id)
+                        merged_image = merge(path, response[0][0].replace(' ', '_'), user.user_id, response[1][0])
                         self.send_photo_of_a_breed(user, merged_image)
                     except Exception as e:
                         pprint("Error sending merged: " + str(e))
