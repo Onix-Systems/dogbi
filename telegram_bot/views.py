@@ -11,7 +11,7 @@ from . import models
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from AI.classify_singleton import Analyzer
 from shutil import copy
-from AI.image import merge
+from AI.image import merge, crop
 
 command_list = ['/start', '/help', '/language', '/about']
 
@@ -78,6 +78,9 @@ class BotView(generic.View):
                         file_id,
                         path
                     )
+                    if crop(path) is False:
+                        self.BOT.sendMessage(user.user_id, "Please, send another picture!")
+                        return HttpResponse()
                     response = self.analyzer.get_score(path)
                     try:
                         merged_image = merge(path, response[0][0].replace(' ', '_'), user.user_id, response[1][0])
@@ -181,8 +184,11 @@ class BotView(generic.View):
             self.BOT.sendMessage(user.user_id, "Language set!")
 
     def send_photo_of_a_breed(self, user, breed):
+        path = const.media_url + breed.replace(' ', '_') + '.jpg'
+        if 'ngrok' in const.media_url:
+            self.BOT.sendMessage(user.user_id, "Take a look: " + path)
+            return
         try:
-            path = const.media_url + breed.replace(' ', '_') + '.jpg'
             self.BOT.sendPhoto(user.user_id, path, caption=breed)
         except Exception as e:
             pprint("Error sending a photo of a breed: " + path + str(e))
