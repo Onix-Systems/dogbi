@@ -75,3 +75,6 @@ fabric.properties
 .idea/httpRequests
 __pycache__/
 __pycache__/*
+
+# deploy files
+redeploy.sh
