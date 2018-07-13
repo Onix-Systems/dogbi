@@ -23,6 +23,7 @@ db.sqlite3
 .idea/modules.xml
 .idea/vcs.xml
 .idea/workspace.xml
+.idea/dogbi.iml
 fb_bot/const.py
 telegram_bot/const.py
 dog_bot/settings.py
@@ -30,6 +31,11 @@ AI/static/*
 AI/stanford_5_64_0001.pb
 AI/breeds.csv
 .idea/dog_bot.iml
+dogbi/*
+.db/*
+
+
+
 
 # Sensitive or high-churn files
 .idea/**/dataSources/

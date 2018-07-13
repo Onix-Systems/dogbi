@@ -1,2 +1,5 @@
 from . import classify_singleton
-from . import classify
+from . import image
+from . import face_detect
+from . import object_detection
+from . import object_detection_api

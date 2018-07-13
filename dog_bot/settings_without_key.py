@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['7c10883b.ngrok.io']
+ALLOWED_HOSTS = ['']
 
 
 # Application definition
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'dog_bot.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, '.db/db.sqlite3'),
     }
 }
 

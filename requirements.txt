@@ -10,3 +10,5 @@ tensorflow
 pandas
 sklearn
 scipy
+Pillow
+face_recognition
