@@ -1,38 +1,114 @@
-from PIL import Image, ImageOps, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 import os
 from .object_detection_api import get_objects
 import json
+import textwrap
+import math
+
+
+def draw_arc(draw, center, radius, start, end, fill, width):
+    arc_start = start
+    arc_end = end
+    sides = 360
+    step = 360 / sides
+    previous_point = (center[0], center[1] - radius)
+    points = [previous_point]
+    while arc_start < arc_end:
+        heading = arc_start * 3.1415926535897932384626433832795 / 180
+        next_point = (
+            (previous_point[0] + math.cos(heading) * radius),
+            (previous_point[1] + math.sin(heading) * radius)
+        )
+        previous_point = next_point
+        arc_start += step
+        points.append(previous_point)
+    draw.line(points, fill=fill, width=width)
 
 
 def merge(inc_image, breed_image, user_id, match_percent):
-    BASE = os.path.dirname(os.path.abspath(__file__))
-    images = [Image.open(inc_image), Image.open(BASE + '/static/media/' + breed_image + '.jpg')]
-    images[0] = ImageOps.expand(images[0], border=16, fill=(255, 255, 255))
-    coef = 3  # The lower the bigger the thumbnail will be
-    thumb_size = (int((images[0].size[0]) * ((images[1].size[1]/coef)/(images[0].size[1]))),
-                  int(images[1].size[1]/coef))
-    images[0] = images[0].resize(size=thumb_size, resample=Image.ANTIALIAS)
+    # base path for all static files
+    base = os.path.dirname(os.path.abspath(__file__))
 
-    widths, heights = zip(*(i.size for i in images))
+    # opening incoming image and breed representing image
+    images = [Image.open(inc_image), Image.open(base + '/static/media/' + breed_image + '.jpg')]
+    template = Image.open(base + "/template.png")
 
-    total_width = max(widths)
-    max_height = max(heights)
+    # sizes of images and their location
+    template_size = (654, 1105)
+    breed_image_size = (575, 580)
+    breed_image_paste_position = (40, 100)
+    inc_image_size = (180, 170)
+    inc_image_paste_position = (40, 873)
 
-    new_im = Image.new('RGB', (total_width, max_height))
-    new_im.paste(images[1])
-    new_im.paste(images[0], (0, int(max_height/2)))
+    template = template.resize(size=template_size, resample=Image.ANTIALIAS)
 
+    # fitting images into their places in the template
+    images[1] = ImageOps.fit(images[1], breed_image_size, Image.ANTIALIAS)
+    images[0] = ImageOps.fit(images[0], inc_image_size, Image.ANTIALIAS)
+
+    # forming a new image and pasting everything into the picture
+    new_im = Image.new('RGBA', template_size)
+    new_im.paste(images[1], breed_image_paste_position)
+    new_im.paste(images[0], inc_image_paste_position)
+    new_im = Image.alpha_composite(new_im, template)
+
+    # hardcoded design for fonts and other graphics
     draw = ImageDraw.Draw(new_im)
-    font_size = int(new_im.size[1]/12)
-    font = ImageFont.truetype(BASE + "/font.ttf", font_size)
-    draw.text((0, 0), breed_image.replace('_', ' ') + "\n" + str(match_percent*100)[:4] + "% match", (255, 255, 0), font=font)
 
+    font_file_bold = base + "/font_bold.ttf"
+    font_file_regular = base + "/font_regular.ttf"
+
+    match_font_size = int(new_im.size[0] / 20)
+    match_font = ImageFont.truetype(font_file_bold, match_font_size)
+
+    breed_name_font_size = int(new_im.size[0] / 12)
+    breed_name_font = ImageFont.truetype(font_file_bold, breed_name_font_size)
+
+    description_font_size = int(new_im.size[0] / 25)
+    description_font = ImageFont.truetype(font_file_regular, description_font_size)
+
+    breed_name = (breed_image.replace('_', ' ')).capitalize()
+
+    breed_name_location = (40, 720)
+    breed_name_color = (0, 0, 0)
+
+    match_percent_display = str(match_percent * 100)[:2 + int((match_percent * 100) // 100)] + "%"
+    match_percent_display_location = (512 - int((match_percent * 100) // 100) * match_font_size / 4, 953)
+    match_percent_display_color = (0, 0, 0)
+    match_percent_arc_color = (226, 106, 88)
+    match_percent_arc_radius = 0.8
+    match_percent_arc_width = 4
+    match_percent_arc_end = int(360 * match_percent)
+    match_percent_arc_center = (
+        match_percent_display_location[0] + 32 + int((match_percent * 100) // 100) * match_font_size / 3,
+        match_percent_display_location[1] - 25
+    )
+
+    description_line_length = 20
+    description = textwrap.fill("Lovable, affectionate, gets along easily.", width=description_line_length)
+    description_location = (235, 915)
+    description_color = (178, 178, 178)
+
+    draw.text(match_percent_display_location, match_percent_display, match_percent_display_color,
+              font=match_font)
+    draw.text(breed_name_location, breed_name, breed_name_color,
+              font=breed_name_font)
+    draw.text(description_location, description, description_color,
+              font=description_font)
+    draw_arc(
+        draw=draw,
+        center=match_percent_arc_center, radius=match_percent_arc_radius,
+        start=0, end=match_percent_arc_end,
+        fill=match_percent_arc_color, width=match_percent_arc_width
+    )
+
+    # converting to jpg
+    new_im = new_im.convert("RGB")
+
+    # saving everything and returning a file name
     new_path = breed_image + "mergedwithinputfrom" + str(user_id)
-    final_path = BASE + '/static/media/' + new_path + '.jpg'
+    final_path = base + '/static/media/' + new_path + '.jpg'
     new_im.save(final_path)
-    # face_count, new_im = face_detect.face_detect(final_path)
-    # if face_count:
-    #    new_im.save(final_path)
     return new_path
 
 
