@@ -12,6 +12,7 @@ from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from AI.classify_singleton import Analyzer
 from shutil import copy
 from AI.image import merge, crop
+import requests
 
 command_list = ['/start', '/help', '/language', '/about']
 
@@ -185,11 +186,15 @@ class BotView(generic.View):
 
     def send_photo_of_a_breed(self, user, breed):
         path = const.media_url + breed.replace(' ', '_') + '.jpg'
-        if 'ngrok' in const.media_url:
+        if 'njrok' in const.media_url:
             self.BOT.sendMessage(user.user_id, "Take a look: " + path)
             return
         try:
-            self.BOT.sendPhoto(user.user_id, path, caption=breed)
+            telegram_url = "https://api.telegram.org/bot" + const.bot_token + "/sendPhoto"
+            response = requests.post(url=telegram_url, data={"chat_id": user.user_id, "photo": path})
+            print("link: ", telegram_url, path)
+            print(response.content)
+            # self.BOT.sendPhoto(user.user_id, path, caption=breed)
         except Exception as e:
             pprint("Error sending a photo of a breed: " + path + str(e))
             pprint("Trying to send a link")

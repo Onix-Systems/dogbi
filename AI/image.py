@@ -109,6 +109,8 @@ def merge(inc_image, breed_image, user_id, match_percent):
     new_path = breed_image + "mergedwithinputfrom" + str(user_id)
     final_path = base + '/static/media/' + new_path + '.jpg'
     new_im.save(final_path)
+    from . import memory
+    memory.print_memory_usage()
     return new_path
 
 

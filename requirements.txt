@@ -12,3 +12,4 @@ sklearn
 scipy
 Pillow
 face_recognition
+psutil
