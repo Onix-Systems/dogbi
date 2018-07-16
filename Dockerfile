@@ -38,4 +38,6 @@ ADD . /
 VOLUME ./.db
 EXPOSE 8000
 RUN python telegram_bot/config.py
-ENTRYPOINT python manage.py collectstatic && python manage.py migrate && gunicorn --workers=2 -b 0.0.0.0:8000 dog_bot.wsgi
+ENTRYPOINT python manage.py collectstatic && python manage.py migrate && \
+celery -A dog_bot worker --pool=solo -E --detach && \
+gunicorn --workers=2 -b 0.0.0.0:8000 dog_bot.wsgi

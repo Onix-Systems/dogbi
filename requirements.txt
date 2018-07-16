@@ -13,3 +13,4 @@ scipy
 Pillow
 face_recognition
 psutil
+celery

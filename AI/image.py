@@ -4,6 +4,7 @@ from .object_detection_api import get_objects
 import json
 import textwrap
 import math
+from django.utils import timezone
 
 
 def draw_arc(draw, center, radius, start, end, fill, width):
@@ -101,12 +102,14 @@ def merge(inc_image, breed_image, user_id, match_percent):
         start=0, end=match_percent_arc_end,
         fill=match_percent_arc_color, width=match_percent_arc_width
     )
-
+# maltese_dog4397184802018-07-16_16-21-20-175368-00-00.jpg
+# maltese_dog4397184802018-07-16 16-21-20-175368-00-00.jpg
     # converting to jpg
     new_im = new_im.convert("RGB")
 
     # saving everything and returning a file name
-    new_path = breed_image + "mergedwithinputfrom" + str(user_id)
+    timecode = str(timezone.now()).replace(':', '-').replace('+', '-').replace('.', '-').replace(' ', '_')
+    new_path = breed_image + str(user_id) + timecode
     final_path = base + '/static/media/' + new_path + '.jpg'
     new_im.save(final_path)
     from . import memory

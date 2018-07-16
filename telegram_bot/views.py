@@ -11,9 +11,9 @@ from . import models
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from AI.classify_singleton import Analyzer
 from shutil import copy
-from AI.image import merge, crop
+from AI.image import crop
 import requests
-
+from telegram_bot.tasks import analyze
 command_list = ['/start', '/help', '/language', '/about']
 
 
@@ -79,19 +79,7 @@ class BotView(generic.View):
                         file_id,
                         path
                     )
-                    if crop(path) is False:
-                        self.BOT.sendMessage(user.user_id, "Please, send another picture!")
-                        return HttpResponse()
-                    response = self.analyzer.get_score(path)
-                    try:
-                        merged_image = merge(path, response[0][0].replace(' ', '_'), user.user_id, response[1][0])
-                        self.send_photo_of_a_breed(user, merged_image)
-                    except Exception as e:
-                        pprint("Error sending merged: " + str(e))
-                    self.send_results(user, response)
-                    user.files.add(models.File.objects.create(path=path))
-                    user.files.add(models.File.objects.create(path=merged_image))
-                    user.save()
+                    analyzer_product = analyze.delay(path, user_id=user.user_id)
                     return HttpResponse()
             except telepot.exception.BotWasBlockedError:
                 return HttpResponse()
@@ -137,30 +125,6 @@ class BotView(generic.View):
             help_text
         )
 
-    def send_results(self, user, response):
-        self.send_photo_of_a_breed(user, response[0][0])
-        if user.language == 'RU':
-            r = "Я думаю это " + response[0][0] + " и я на " + str(response[1][0] * 100)[
-                                                               :4] + "% уверен. Я отослал Вам фотографию, можете проверить сами. Я думаю это также может быть: " + \
-                response[0][1] + " или " + response[0][2] + " (нажмите, чтобы получить фотографию)."
-            wrong_button = "Неправильно"
-        else:
-            r = "I think the breed of this dog is " + response[0][0] + " and I'm " + str(response[1][0] * 100)[
-                                                                                     :4] + "% confident. I sent you a photo, so you can see for yourself. I also found it similar to the following breeds: " + \
-                response[0][1] + ", " + response[0][2] + " (tap to get a photo)."
-            wrong_button = "Wrong"
-
-        keyboard = InlineKeyboardMarkup(
-            inline_keyboard=[
-                [
-                    InlineKeyboardButton(text=response[0][1], callback_data='dog ' + response[0][1]),
-                    InlineKeyboardButton(text=response[0][2], callback_data='dog ' + response[0][2]),
-                    InlineKeyboardButton(text=wrong_button, callback_data='wrong'),
-                ]
-            ]
-        )
-        self.BOT.sendMessage(user.user_id, text=r, reply_markup=keyboard)
-
     def send_processing(self, user):
         if user.language == 'RU':
             self.BOT.sendMessage(user.user_id, "Обрабатываю изображение...")
@@ -190,11 +154,7 @@ class BotView(generic.View):
             self.BOT.sendMessage(user.user_id, "Take a look: " + path)
             return
         try:
-            telegram_url = "https://api.telegram.org/bot" + const.bot_token + "/sendPhoto"
-            response = requests.post(url=telegram_url, data={"chat_id": user.user_id, "photo": path})
-            print("link: ", telegram_url, path)
-            print(response.content)
-            # self.BOT.sendPhoto(user.user_id, path, caption=breed)
+            self.BOT.sendPhoto(user.user_id, path, caption=breed)
         except Exception as e:
             pprint("Error sending a photo of a breed: " + path + str(e))
             pprint("Trying to send a link")
