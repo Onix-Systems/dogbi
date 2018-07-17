@@ -35,9 +35,9 @@ ADD requirements.txt /requirements.txt
 RUN pip install -r requirements.txt
 
 ADD . /
-VOLUME ./.db
+
 EXPOSE 8000
 RUN python telegram_bot/config.py
 ENTRYPOINT python manage.py collectstatic && python manage.py migrate && \
-celery -A dog_bot worker --pool=solo -E --detach && \
+celery -A dog_bot worker --pool=solo --concurrency=1 -E --detach && \
 gunicorn --workers=2 -b 0.0.0.0:8000 dog_bot.wsgi

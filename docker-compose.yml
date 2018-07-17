@@ -1,0 +1,23 @@
+version: '2'
+services:
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:latest
+    environment:
+      - RABBITMQ_DEFAULT_USER=mshvern
+      - RABBITMQ_DEFAULT_PASS=hellsing
+    ports:
+      - "5672:5672"
+      - "15672:15672"  # here, we can access rabbitmq management plugin
+
+
+  # Django web server - celery master
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: web
+    ports:
+      - "8005:8000"
+    links:
+      - rabbit
