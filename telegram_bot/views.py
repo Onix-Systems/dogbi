@@ -138,17 +138,16 @@ class BotView(generic.View):
         )
 
     def send_results(self, user, response):
-        self.send_photo_of_a_breed(user, response[0][0])
         if user.language == 'RU':
             r = "Я думаю это " + response[0][0] + " и я на " + str(response[1][0] * 100)[
                                                                :4] + "% уверен. Я отослал Вам фотографию, можете проверить сами. Я думаю это также может быть: " + \
                 response[0][1] + " или " + response[0][2] + " (нажмите, чтобы получить фотографию)."
-            wrong_button = "Неправильно"
+            wrong_button = "Неправильно" + u"\u2620"
         else:
             r = "I think the breed of this dog is " + response[0][0] + " and I'm " + str(response[1][0] * 100)[
                                                                                      :4] + "% confident. I sent you a photo, so you can see for yourself. I also found it similar to the following breeds: " + \
                 response[0][1] + ", " + response[0][2] + " (tap to get a photo)."
-            wrong_button = "Wrong"
+            wrong_button = "Wrong" + u"\u2620"
 
         keyboard = InlineKeyboardMarkup(
             inline_keyboard=[
