@@ -27,4 +27,4 @@ urlpatterns = [
     url(r'^bot/', include('fb_bot.urls')),
     url(r'^telebot/', include('telegram_bot.urls')),
     path('', views.index),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
