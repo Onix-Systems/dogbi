@@ -40,5 +40,5 @@ EXPOSE 8000
 EXPOSE 8080
 RUN python telegram_bot/config.py
 ENTRYPOINT python manage.py collectstatic && python manage.py migrate && \
-    twistd web --port "tcp:port=8080" --path AI/static/media --logfile=logtwistd && \
+    twistd web --port "tcp:port=8080" --path AI/static --logfile=logtwistd && \
     gunicorn -b 0.0.0.0:8000 dog_bot.wsgi
