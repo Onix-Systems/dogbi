@@ -1,0 +1,14 @@
+version: '2'
+services:
+  # Django web server + Tornado static-server
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: web
+    volumes:
+      - "./.db/:/.db/"
+      - "./telegram_bot/saved/:/telegram_bot/saved/"
+      - "./fb_bot/saved/:/fb_bot/saved/"
+    ports:
+      - "8005:8000"

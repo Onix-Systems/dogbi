@@ -35,7 +35,6 @@ ADD requirements.txt /requirements.txt
 RUN pip install -r requirements.txt
 
 ADD . /
-VOLUME ./.db
 EXPOSE 8000
 EXPOSE 8080
 RUN python telegram_bot/config.py
