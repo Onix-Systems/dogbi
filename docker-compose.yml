@@ -1,14 +1,18 @@
 version: '2'
 services:
   # Django web server + Tornado static-server
-  web:
+  dogbi:
     build:
       context: .
       dockerfile: Dockerfile
-    hostname: web
+    hostname: dogbi
     volumes:
       - "./.db/:/.db/"
       - "./telegram_bot/saved/:/telegram_bot/saved/"
       - "./fb_bot/saved/:/fb_bot/saved/"
     ports:
       - "8005:8000"
+      - "8006:8080"
+    logging:
+      options:
+        max-size: 50m
