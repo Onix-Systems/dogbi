@@ -13,6 +13,7 @@ services:
     ports:
       - "127.0.0.1:8005:8000"
       - "127.0.0.1:8006:8080"
+    restart: unless-stopped
     logging:
       options:
         max-size: 50m
