@@ -1,0 +1,118 @@
+afghan hound:афганская борзая
+african hunting dog:гиеновидная собака
+airedale:эрдельтерьер
+american staffordshire terrier:американский стаффордширский терьер
+appenzeller:аппенцеллер зенненхунд
+australian terrier:австралийский терьер
+bedlington terrier:бедлингтон-терьер
+bernese mountain dog:бернская овчарка
+blenheim spaniel:кавалер-кинг-чарльз-спаниель
+border collie:бордер-колли
+border terrier:бордер-терьер
+boston bull:бостон-терьер
+bouvier des flandres:фландрский бувье
+brabancon griffon:брабантский гриффон
+brittany spaniel:бретонский спаниель
+cardigan:вельш-корги-кардиган
+chesapeake bay retriever:чесапик-бей-ретривер
+chihuahua:чихуахуа
+dandie dinmont:денди-динмонт-терьер
+doberman:доберман
+english foxhound:английский фоксхаунд
+english setter:английский сеттер
+english springer:английский спрингер-спаниель
+entlebucher:энтлебухер зенненхунд
+eskimo dog:эскимосская собака
+french bulldog:французский бульдог
+german shepherd:немецкая овчарка
+german shorthaired pointer:немецкий курцхаар
+gordon setter:шотландский сеттер
+great dane:немецкий дог
+great pyrenees:пиренейская горная собака
+greater swiss mountain dog:большой швейцарский зенненхунд
+ibizan hound:ивисская борзая
+irish setter:ирландский сеттер
+irish terrier:ирландский терьер
+irish water spaniel:ирландский водяной спаниель
+irish wolfhound:ирландский вольфхаунд
+italian greyhound:левретка
+japanese spaniel:японский хин
+kerry blue terrier:керри-блю-терьер
+labrador retriever:лабрадор
+lakeland terrier:лейкленд-терьер
+leonberg:леонбергер
+lhasa:лхаса апсо
+maltese dog:мальтийская болонка
+mexican hairless:ксолоитцкуинтли
+newfoundland:ньюфаундленд
+norfolk terrier:норфолк-терьер
+norwegian elkhound:норвежский серый элкхаунд
+norwich terrier:норвич-терьер
+old english sheepdog:бобтейл
+pekingese:пекинес
+pembroke:вельш-корги-пемброк
+pomeranian:померанский шпиц
+rhodesian ridgeback:родезийский риджбек
+rottweiler:ротвейлер
+saint bernard:сенбернар
+saluki:салюки
+samoyed:самоедская собака
+scotch terrier:шотландский терьер
+scottish deerhound:оленья борзая
+sealyham terrier:силихем-терьер
+shetland sheepdog:шелти
+siberian husky:хаски
+staffordshire bullterrier:стаффордширский бультерьер
+sussex spaniel:суссекс-спаниель
+tibetan mastiff:тибетский мастиф
+tibetan terrier:тибетский терьер
+walker hound:древесный кунхаунд
+weimaraner:веймаранер
+welsh springer spaniel:вельш-спрингер-спаниель
+west highland white terrier:вест-хайленд-уайт-терьер
+yorkshire terrier:йоркширский терьер
+affenpinscher:аффенпинчер
+basenji:басенджи
+basset:бассет-хаунд
+beagle:бигль
+black-and-tan coonhound:чёрно-подпалый кунхаунд
+bloodhound:бладхаунд
+bluetick:крапчато-голубой кунхаунд
+borzoi:борзая
+boxer:боксёр
+briard:бриар
+bullmastiff:бульмастиф
+cairn:керн-терьер
+chow:чау-чау
+clumber:кламбер-спаниель
+cocker spaniel:кокер-спаниель
+collie:колли
+curly-coated retriever:курчавошёрстный ретривер
+dhole:красный волк
+dingo:динго
+flat-coated retriever:прямошёрстный ретривер
+giant schnauzer:ризеншнауцер
+golden retriever:золотистый ретривер
+groenendael:грюнендаль
+keeshond:вольфшпиц
+kelpie:австралийский келпи
+komondor:комондор
+kuvasz:кувас
+malamute:аляскинский маламут
+miniature pinscher:миниатюрный пинчер
+miniature poodle:миниатюрный пудель
+miniature schnauzer:цвергшнауцер
+otterhound:оттерхаунд
+papillon:континентальный той-спаниель
+pug:мопс
+redbone:красный кунхаунд
+schipperke:схипперке
+silky terrier:австралийский шелковистый терьер
+soft-coated wheaten terrier:ирландский мягкошёрстный пшеничный терьер
+standard poodle:пудель
+standard schnauzer:миттельшнауцер
+toy poodle:той-пудель
+toy terrier:той-терьер
+vizsla:венгерская выжла
+whippet:уиппет
+wire-haired fox terrier:жесткошёрстный фокстерьер

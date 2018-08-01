@@ -13,6 +13,7 @@ from AI.classify_singleton import Analyzer
 from shutil import copy
 from AI.image import merge, crop
 import requests
+from AI.find_translation import find_translation
 
 command_list = ['/start', '/help', '/language', '/about']
 
@@ -84,7 +85,10 @@ class BotView(generic.View):
                         return HttpResponse()
                     response = self.analyzer.get_score(path)
                     try:
-                        merged_image = merge(path, response[0][0].replace(' ', '_'), user.user_id, response[1][0])
+                        if user.language == RU:
+                            merged_image = merge(path, response[0][0].replace(' ', '_'), user.user_id, response[1][0], localize=True)
+                        else:
+                            merged_image = merge(path, response[0][0].replace(' ', '_'), user.user_id, response[1][0])
                         self.send_photo_of_a_breed(user, merged_image)
                     except Exception as e:
                         pprint("Error sending merged: " + str(e))
@@ -139,9 +143,9 @@ class BotView(generic.View):
 
     def send_results(self, user, response):
         if user.language == 'RU':
-            r = "Я думаю это " + response[0][0] + " и я на " + str(response[1][0] * 100)[
+            r = "Я думаю это " + find_translation(response[0][0]) + " и я на " + str(response[1][0] * 100)[
                                                                :4] + "% уверен. Я отослал Вам фотографию, можете проверить сами. Я думаю это также может быть: " + \
-                response[0][1] + " или " + response[0][2] + " (нажмите, чтобы получить фотографию)."
+                find_translation(response[0][1]) + " или " + find_translation(response[0][2]) + " (нажмите, чтобы получить фотографию)."
             wrong_button = "Неправильно" + u"\u2620"
         else:
             r = "I think the breed of this dog is " + response[0][0] + " and I'm " + str(response[1][0] * 100)[

@@ -5,6 +5,7 @@ import json
 import textwrap
 import math
 from django.utils import timezone
+from AI.find_translation import find_translation
 
 
 def draw_arc(draw, center, radius, start, end, fill, width):
@@ -26,7 +27,7 @@ def draw_arc(draw, center, radius, start, end, fill, width):
     draw.line(points, fill=fill, width=width)
 
 
-def merge(inc_image, breed_image, user_id, match_percent):
+def merge(inc_image, breed_image, user_id, match_percent, localize=False):
     # base path for all static files
     base = os.path.dirname(os.path.abspath(__file__))
 
@@ -68,7 +69,10 @@ def merge(inc_image, breed_image, user_id, match_percent):
     description_font_size = int(new_im.size[0] / 25)
     description_font = ImageFont.truetype(font_file_regular, description_font_size)
 
-    breed_name = (breed_image.replace('_', ' ')).capitalize()
+    if localize:
+        breed_name = find_translation((breed_image.replace('_', ' '))).capitalize()
+    else:
+        breed_name = (breed_image.replace('_', ' ')).capitalize()
 
     breed_name_location = (40, 720)
     breed_name_color = (0, 0, 0)
