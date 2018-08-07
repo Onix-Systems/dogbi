@@ -146,12 +146,12 @@ class BotView(generic.View):
             r = "Я думаю это " + find_translation(response[0][0]) + " и я на " + str(response[1][0] * 100)[
                                                                :4] + "% уверен. Я отослал Вам фотографию, можете проверить сами. Я думаю это также может быть: " + \
                 find_translation(response[0][1]) + " или " + find_translation(response[0][2]) + " (нажмите, чтобы получить фотографию)."
-            wrong_button = "Неправильно" + u"\u2620"
+            wrong_button = u"\u2620" + "Неправильно"
         else:
             r = "I think the breed of this dog is " + response[0][0] + " and I'm " + str(response[1][0] * 100)[
                                                                                      :4] + "% confident. I sent you a photo, so you can see for yourself. I also found it similar to the following breeds: " + \
                 response[0][1] + ", " + response[0][2] + " (tap to get a photo)."
-            wrong_button = "Wrong" + u"\u2620"
+            wrong_button = u"\u2620" + "Wrong"
 
         keyboard = InlineKeyboardMarkup(
             inline_keyboard=[
