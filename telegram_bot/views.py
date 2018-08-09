@@ -81,7 +81,7 @@ class BotView(generic.View):
                         path
                     )
                     if crop(path) is False:
-                        self.BOT.sendMessage(user.user_id, "\u26A0"+"\u1F41D"+ "Didn't find any dogs. Please, send another picture!")
+                        self.BOT.sendMessage(user.user_id, "⚠️ 🐝Didn't find any dogs. Please, send another picture!")
                         return HttpResponse()
                     response = self.analyzer.get_score(path)
                     try:
@@ -134,10 +134,10 @@ class BotView(generic.View):
         if user.language == 'RU':
             help_text = """*Помощь:*
 
-* Для получения результата отправьте фотографию собаки 🖼 🐕
+*Для получения результата отправьте фотографию собаки 🖼 🐕
 В результате бот 🤖 укажет породу. 
 
-*Команды:*
+**Команды:**
 /help - покажет это сообщение;
 /about - информация о боте и о разработке ;
 /language - [en|ru] - позволяет выбрать язык;
@@ -153,7 +153,7 @@ class BotView(generic.View):
 * To get a result send us a photo of a dog 🖼 🐕
 The result will show you a breed of this dog.
 
-*Commands:* 
+**Commands:** 
 /about - will show information about the bot;
 /language - [en|ru] - will help you change the language of the bot;
 /help - will show this text;
@@ -200,7 +200,7 @@ Developed by: onix-systems.com
     def send_about_menu(self, user):
 
         if user.language == 'RU':
-            reply = """🐶 *Dogbi*
+            reply = """🐶 **Dogbi**
 
 Это бот для распознавания пород собак 🐕 по фотографии.
 
@@ -209,12 +209,12 @@ Developed by: onix-systems.com
 
 В качестве исключения, мы можем показать на какую породу похоже лицо 👦🏼👩🏻 человека 😂 - можете расшарить эту фотку вашим друзьям. 
 
-*Команды:*
+**Команды:**
 /about - покажет это сообщение
 /language - [en|ru] - позволяет выбрать язык
 /help - помощь в работе бота
 
-*Технологии:*
+**Технологии:**
 https://github.com/Onix-Systems/dogbi
 Python, Telepot, Django, Tensorflow
 
@@ -223,7 +223,7 @@ Python, Telepot, Django, Tensorflow
 ✉️ контакты: sales@onix-systems.com
 """
         else:
-            reply = """🐶 *Dogbi*
+            reply = """🐶 **Dogbi**
 
 This bot identifies the breed of a dog 🐕  by a photo.
 
@@ -232,12 +232,12 @@ If there aren't any dogs on the photo, we will not work with such images.
 
 As an exception, we can show you what breed is most similar to a human face 👦 👩  if you send a photo of a person 😂 - you can share this photo with your friends.
 
-*Commands:* 
+**Commands:** 
 /about - will show this text
 /language - [en|ru] - will help you change the language of the bot
 /help - will show how to work with the bot
 
-*Technology:* 
+**Technology:** 
 Python, Telepot, Django, Tensorflow
 
 Developed by: onix-systems.com 
