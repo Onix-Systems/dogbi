@@ -85,7 +85,7 @@ class BotView(generic.View):
                         return HttpResponse()
                     response = self.analyzer.get_score(path)
                     try:
-                        if user.language == RU:
+                        if user.language == 'RU':
                             merged_image = merge(path, response[0][0].replace(' ', '_'), user.user_id, response[1][0], localize=True)
                         else:
                             merged_image = merge(path, response[0][0].replace(' ', '_'), user.user_id, response[1][0])
@@ -132,12 +132,12 @@ class BotView(generic.View):
 
     def send_help_menu(self, user):
         if user.language == 'RU':
-            help_text = """*Помощь:*
+            help_text = """<b>Помощь:</b>
 
-*Для получения результата отправьте фотографию собаки 🖼 🐕
+-Для получения результата отправьте фотографию собаки 🖼 🐕
 В результате бот 🤖 укажет породу. 
 
-**Команды:**
+<b>Команды:</b>
 /help - покажет это сообщение;
 /about - информация о боте и о разработке ;
 /language - [en|ru] - позволяет выбрать язык;
@@ -148,12 +148,12 @@ class BotView(generic.View):
 
 """
         else:
-            help_text = """*Help*
+            help_text = """<b>Help</b>
 
-* To get a result send us a photo of a dog 🖼 🐕
+-To get a result send us a photo of a dog 🖼 🐕
 The result will show you a breed of this dog.
 
-**Commands:** 
+<b>Commands:</b> 
 /about - will show information about the bot;
 /language - [en|ru] - will help you change the language of the bot;
 /help - will show this text;
@@ -165,7 +165,8 @@ Developed by: onix-systems.com
 
         self.BOT.sendMessage(
             user.user_id,
-            help_text
+            help_text, 
+            parse_mode="HTML"
         )
 
     def send_results(self, user, response):
@@ -200,7 +201,7 @@ Developed by: onix-systems.com
     def send_about_menu(self, user):
 
         if user.language == 'RU':
-            reply = """🐶 **Dogbi**
+            reply = """🐶 <b>Dogbi</b>
 
 Это бот для распознавания пород собак 🐕 по фотографии.
 
@@ -209,12 +210,12 @@ Developed by: onix-systems.com
 
 В качестве исключения, мы можем показать на какую породу похоже лицо 👦🏼👩🏻 человека 😂 - можете расшарить эту фотку вашим друзьям. 
 
-**Команды:**
+<b>Команды:</b>
 /about - покажет это сообщение
 /language - [en|ru] - позволяет выбрать язык
 /help - помощь в работе бота
 
-**Технологии:**
+<b>Технологии:</b>
 https://github.com/Onix-Systems/dogbi
 Python, Telepot, Django, Tensorflow
 
@@ -223,7 +224,7 @@ Python, Telepot, Django, Tensorflow
 ✉️ контакты: sales@onix-systems.com
 """
         else:
-            reply = """🐶 **Dogbi**
+            reply = """🐶 <b>Dogbi</b>
 
 This bot identifies the breed of a dog 🐕  by a photo.
 
@@ -232,12 +233,12 @@ If there aren't any dogs on the photo, we will not work with such images.
 
 As an exception, we can show you what breed is most similar to a human face 👦 👩  if you send a photo of a person 😂 - you can share this photo with your friends.
 
-**Commands:** 
+<b>Commands:</b> 
 /about - will show this text
 /language - [en|ru] - will help you change the language of the bot
 /help - will show how to work with the bot
 
-**Technology:** 
+<b>Technology:</b> 
 Python, Telepot, Django, Tensorflow
 
 Developed by: onix-systems.com 
@@ -245,7 +246,7 @@ Developed by: onix-systems.com
 
 """
 
-        self.BOT.sendMessage(user.user_id, reply)
+        self.BOT.sendMessage(user.user_id, reply, parse_mode="HTML")
 
     def set_language(self, user, language):
         user.language = language

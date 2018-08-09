@@ -70,7 +70,8 @@ def merge(inc_image, breed_image, user_id, match_percent, localize=False):
     description_font = ImageFont.truetype(font_file_regular, description_font_size)
 
     if localize:
-        breed_name = find_translation((breed_image.replace('_', ' '))).capitalize()
+        breed_name = (breed_image.replace('_', ' ')).capitalize()
+        # breed_name = find_translation((breed_image.replace('_', ' '))).capitalize()
     else:
         breed_name = (breed_image.replace('_', ' ')).capitalize()
 
