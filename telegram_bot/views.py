@@ -81,7 +81,7 @@ class BotView(generic.View):
                         path
                     )
                     if crop(path) is False:
-                        self.BOT.sendMessage(user.user_id, "Please, send another picture!")
+                        self.BOT.sendMessage(user.user_id, "\u26A0"+"\u1F41D"+ "Didn't find any dogs. Please, send another picture!")
                         return HttpResponse()
                     response = self.analyzer.get_score(path)
                     try:
@@ -132,9 +132,36 @@ class BotView(generic.View):
 
     def send_help_menu(self, user):
         if user.language == 'RU':
-            help_text = "Вы можете использовать этого бота отослав ему фотографию собаки. Он обработает изображение и попытается определить породу. Вы можете использовать /language для смены языка."
+            help_text = """*Помощь:*
+
+* Для получения результата отправьте фотографию собаки 🖼 🐕
+В результате бот 🤖 укажет породу. 
+
+*Команды:*
+/help - покажет это сообщение;
+/about - информация о боте и о разработке ;
+/language - [en|ru] - позволяет выбрать язык;
+/stop - заблокировать бота.
+
+Разработано в onix-systems.com
+✉️ контакты: sales@onix-systems.com
+
+"""
         else:
-            help_text = "You can use this bot by sending a photo of a dog. It will process the image and try to identify the dog\'s breed. You can use /language command for chaning the language"
+            help_text = """*Help*
+
+* To get a result send us a photo of a dog 🖼 🐕
+The result will show you a breed of this dog.
+
+*Commands:* 
+/about - will show information about the bot;
+/language - [en|ru] - will help you change the language of the bot;
+/help - will show this text;
+/stop - stop the bot from messaging you.
+
+Developed by: onix-systems.com 
+✉️ contacts: sales@onix-systems.com 
+"""
 
         self.BOT.sendMessage(
             user.user_id,
@@ -173,9 +200,50 @@ class BotView(generic.View):
     def send_about_menu(self, user):
 
         if user.language == 'RU':
-            reply = 'Этот бот был разработан с использованием Python, Telepot, Django и Tensorflow. Лучше всего бот работает с чёткими изображениями без посторонних объектов. Контакты: @mshvern'
+            reply = """🐶 *Dogbi*
+
+Это бот для распознавания пород собак 🐕 по фотографии.
+
+Отправьте фото любой собаки и мы покажем вам результат. 
+Если на фото не обнаружено собак, то распознавание не производится. 
+
+В качестве исключения, мы можем показать на какую породу похоже лицо 👦🏼👩🏻 человека 😂 - можете расшарить эту фотку вашим друзьям. 
+
+*Команды:*
+/about - покажет это сообщение
+/language - [en|ru] - позволяет выбрать язык
+/help - помощь в работе бота
+
+*Технологии:*
+https://github.com/Onix-Systems/dogbi
+Python, Telepot, Django, Tensorflow
+
+
+Разработано в onix-systems.com
+✉️ контакты: sales@onix-systems.com
+"""
         else:
-            reply = "This bot was developed using Python, Telepot, Django, and Tensorflow. This bot works best with high resolution photos that contain a single dog. Contacts: @mshvern"
+            reply = """🐶 *Dogbi*
+
+This is bot identifies the breed of a dog 🐕  by a photo.
+
+Send any photo with a dog, and we will show you a breed of that dog. 
+If there aren't any dogs on the photo, we will not work with such images. 
+
+As an exception, we can show you what breed is most similar to a human face 👦 👩  if you send a photo of a person 😂 - you can share this photo with your friends.
+
+*Commands:* 
+/about - will show this text
+/language - [en|ru] - will help you change the language of the bot
+/help - will show how to work with the bot
+
+*Technology:* 
+Python, Telepot, Django, Tensorflow
+
+Developed by: onix-systems.com 
+✉️ contacts: sales@onix-systems.com 
+
+"""
 
         self.BOT.sendMessage(user.user_id, reply)
 
