@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     hostname: dogbi
+    container_name: dogbi
     volumes:
       - "./.db/:/.db/"
       - "./telegram_bot/saved/:/telegram_bot/saved/"
