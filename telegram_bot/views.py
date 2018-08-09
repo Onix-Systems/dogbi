@@ -225,7 +225,7 @@ Python, Telepot, Django, Tensorflow
         else:
             reply = """🐶 *Dogbi*
 
-This is bot identifies the breed of a dog 🐕  by a photo.
+This bot identifies the breed of a dog 🐕  by a photo.
 
 Send any photo with a dog, and we will show you a breed of that dog. 
 If there aren't any dogs on the photo, we will not work with such images. 
