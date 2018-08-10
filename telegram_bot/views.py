@@ -15,7 +15,7 @@ from AI.image import merge, crop
 import requests
 from AI.find_translation import find_translation
 
-command_list = ['/start', '/help', '/language', '/about']
+command_list = ['/start', '/help', '/language', '/about', '/stats']
 
 
 class BotView(generic.View):
@@ -30,7 +30,18 @@ class BotView(generic.View):
     def post(self, request, *args, **kwargs):
         try:
             incoming_message = json.loads(self.request.body.decode('utf-8'))
-            pprint(incoming_message)
+            try:
+                user_message_pair = (
+                    incoming_message['message']['from']['id'], incoming_message['message']['message_id'])
+                if len(models.UserMessage.objects.filter(user_id=user_message_pair[0], message_id=user_message_pair[1])):
+                    return HttpResponse()
+                models.UserMessage.objects.create(
+                    user_id=user_message_pair[0],
+                    message_id=user_message_pair[1]
+                )
+            except Exception as e:
+                print("Callback?")
+            print(incoming_message)
             try:
                 tele_id = incoming_message['message']['from']['id']
             except KeyError:
@@ -69,6 +80,9 @@ class BotView(generic.View):
                         return HttpResponse()
                     if text == '/language':
                         self.send_language_selection_menu(user)
+                        return HttpResponse()
+                    if text == '/stats':
+                        self.send_stats(user)
                         return HttpResponse()
                 else:
                     self.send_processing(user)
@@ -114,6 +128,16 @@ class BotView(generic.View):
 
     def get(self, request, *args, **kwargs):
         return HttpResponse("hey!")
+
+    def send_stats(self, user):
+        message_count = models.UserMessage.objects.count()
+        user_count = models.UserLang.objects.count()
+        if user.language == 'RU':
+            self.BOT.sendMessage(
+                user.user_id, text=f"Количество Сообщений: {message_count} Количество Пользователей: {user_count}")
+        else:
+            self.BOT.sendMessage(
+                user.user_id, text=f"Dogbi received {message_count} messages from {user_count} users")
 
     def send_language_selection_menu(self, user):
         if user.language == 'RU':
