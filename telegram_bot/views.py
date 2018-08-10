@@ -61,7 +61,7 @@ class BotView(generic.View):
                     pprint("returning")
                     return HttpResponse()
                 if 'photo' not in incoming_message['message']:
-                    if text == '/start' or text == '/help' or text not in command_list:
+                    if text in ['/start', '/help'] or text not in command_list:
                         self.send_help_menu(user)
                         return HttpResponse()
                     if text == '/about':
@@ -81,20 +81,28 @@ class BotView(generic.View):
                         path
                     )
                     if crop(path) is False:
-                        self.BOT.sendMessage(user.user_id, "⚠️ 🐝Didn't find any dogs. Please, send another picture!")
+                        if user.language == 'RU':
+                            self.BOT.sendMessage(
+                                user.user_id, "⚠️ 🐝Didn't find any dogs. Please, send another picture!")
+                        else:
+                            self.BOT.sendMessage(
+                                user.user_id, "⚠️ 🐝Собак не найдено! Можете попробовать с другой фотографией.")
                         return HttpResponse()
                     response = self.analyzer.get_score(path)
                     try:
                         if user.language == 'RU':
-                            merged_image = merge(path, response[0][0].replace(' ', '_'), user.user_id, response[1][0], localize=True)
+                            merged_image = merge(path, response[0][0].replace(
+                                ' ', '_'), user.user_id, response[1][0], localize=True)
                         else:
-                            merged_image = merge(path, response[0][0].replace(' ', '_'), user.user_id, response[1][0])
+                            merged_image = merge(path, response[0][0].replace(
+                                ' ', '_'), user.user_id, response[1][0])
                         self.send_photo_of_a_breed(user, merged_image)
                     except Exception as e:
                         pprint("Error sending merged: " + str(e))
                     self.send_results(user, response)
                     user.files.add(models.File.objects.create(path=path))
-                    user.files.add(models.File.objects.create(path=merged_image))
+                    user.files.add(
+                        models.File.objects.create(path=merged_image))
                     user.save()
                     return HttpResponse()
             except telepot.exception.BotWasBlockedError:
@@ -113,8 +121,10 @@ class BotView(generic.View):
             keyboard = InlineKeyboardMarkup(
                 inline_keyboard=[
                     [
-                        InlineKeyboardButton(text="Английский", callback_data='EN'),
-                        InlineKeyboardButton(text="Русский", callback_data='RU'),
+                        InlineKeyboardButton(
+                            text="Английский", callback_data='EN'),
+                        InlineKeyboardButton(
+                            text="Русский", callback_data='RU'),
                     ]
                 ]
             )
@@ -123,12 +133,15 @@ class BotView(generic.View):
             keyboard = InlineKeyboardMarkup(
                 inline_keyboard=[
                     [
-                        InlineKeyboardButton(text="English", callback_data='EN'),
-                        InlineKeyboardButton(text="Russian", callback_data='RU'),
+                        InlineKeyboardButton(
+                            text="English", callback_data='EN'),
+                        InlineKeyboardButton(
+                            text="Russian", callback_data='RU'),
                     ]
                 ]
             )
-        self.BOT.sendMessage(user.user_id, text=selection_text, reply_markup=keyboard)
+        self.BOT.sendMessage(
+            user.user_id, text=selection_text, reply_markup=keyboard)
 
     def send_help_menu(self, user):
         if user.language == 'RU':
@@ -165,31 +178,48 @@ Developed by: onix-systems.com
 
         self.BOT.sendMessage(
             user.user_id,
-            help_text, 
+            help_text,
             parse_mode="HTML"
         )
 
     def send_results(self, user, response):
         if user.language == 'RU':
             r = "Я думаю это " + find_translation(response[0][0]) + " и я на " + str(response[1][0] * 100)[
-                                                               :4] + "% уверен. Я отослал Вам фотографию, можете проверить сами. Я думаю это также может быть: " + \
-                find_translation(response[0][1]) + " или " + find_translation(response[0][2]) + " (нажмите, чтобы получить фотографию)."
+                :4] + "% уверен. Я отослал Вам фотографию, можете проверить сами. Я думаю это также может быть: " + \
+                find_translation(response[0][1]) + " или " + find_translation(
+                    response[0][2]) + " (нажмите, чтобы получить фотографию)."
             wrong_button = u"\u2620" + "Неправильно"
+            keyboard = InlineKeyboardMarkup(
+                inline_keyboard=[
+                    [
+                        InlineKeyboardButton(text=find_translation(
+                            response[0][1]), callback_data='dog ' + response[0][1]),
+                        InlineKeyboardButton(text=find_translation(
+                            response[0][2]), callback_data='dog ' + response[0][2]),
+                        InlineKeyboardButton(
+                            text=wrong_button, callback_data='wrong'),
+                    ]
+                ]
+            )
         else:
             r = "I think the breed of this dog is " + response[0][0] + " and I'm " + str(response[1][0] * 100)[
-                                                                                     :4] + "% confident. I sent you a photo, so you can see for yourself. I also found it similar to the following breeds: " + \
-                response[0][1] + ", " + response[0][2] + " (tap to get a photo)."
+                :4] + "% confident. I sent you a photo, so you can see for yourself. I also found it similar to the following breeds: " + \
+                response[0][1] + ", " + response[0][2] + \
+                " (tap to get a photo)."
             wrong_button = u"\u2620" + "Wrong"
-
-        keyboard = InlineKeyboardMarkup(
-            inline_keyboard=[
-                [
-                    InlineKeyboardButton(text=response[0][1], callback_data='dog ' + response[0][1]),
-                    InlineKeyboardButton(text=response[0][2], callback_data='dog ' + response[0][2]),
-                    InlineKeyboardButton(text=wrong_button, callback_data='wrong'),
+            keyboard = InlineKeyboardMarkup(
+                inline_keyboard=[
+                    [
+                        InlineKeyboardButton(
+                            text=response[0][1], callback_data='dog ' + response[0][1]),
+                        InlineKeyboardButton(
+                            text=response[0][2], callback_data='dog ' + response[0][2]),
+                        InlineKeyboardButton(
+                            text=wrong_button, callback_data='wrong'),
+                    ]
                 ]
-            ]
-        )
+            )
+
         self.BOT.sendMessage(user.user_id, text=r, reply_markup=keyboard)
 
     def send_processing(self, user):
@@ -263,7 +293,8 @@ Developed by: onix-systems.com
             return
         try:
             telegram_url = "https://api.telegram.org/bot" + const.bot_token + "/sendPhoto"
-            response = requests.post(url=telegram_url, data={"chat_id": user.user_id, "photo": path})
+            response = requests.post(url=telegram_url, data={
+                                     "chat_id": user.user_id, "photo": path})
             print("link: ", telegram_url, path)
             print(response.content)
             # self.BOT.sendPhoto(user.user_id, path, caption=breed)
@@ -296,6 +327,7 @@ Developed by: onix-systems.com
     def save_files(self, user):
         for file in user.files.all():
             try:
-                copy(file.path, os.path.join(self.BASE, 'saved/' + str(user.user_id) + '_' + str(file.pk) + '.jpg'))
+                copy(file.path, os.path.join(self.BASE, 'saved/' +
+                                             str(user.user_id) + '_' + str(file.pk) + '.jpg'))
             except Exception as e:
                 pprint("no file at " + file.path)

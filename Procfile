@@ -1,1 +1,0 @@
-web: gunicorn dog_bot.wsgi --log-file -

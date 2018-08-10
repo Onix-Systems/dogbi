@@ -33,7 +33,7 @@ AI/breeds.csv
 .idea/dog_bot.iml
 dogbi/*
 .db/*
-
+.vscode/*
 
 
 
