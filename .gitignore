@@ -34,7 +34,7 @@ AI/breeds.csv
 dogbi/*
 .db/*
 .vscode/*
-
+venv/*
 
 
 # Sensitive or high-churn files
