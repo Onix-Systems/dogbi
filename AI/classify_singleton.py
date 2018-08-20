@@ -1,5 +1,4 @@
 import os
-import requests
 
 import numpy as np
 import pandas as pd
@@ -98,12 +97,8 @@ class Analyzer(metaclass=Singleton):
             return df.sort_values(['prob'], ascending=False)
 
     def classify(self, resource_type, path):
-        if resource_type == 'uri':
-            response = requests.get(path)
-            img_raw = response.text()
-        else:
-            with open(path, 'rb') as f:
-                img_raw = f.read()
+        with open(path, 'rb') as f:
+            img_raw = f.read()
 
         return self.infer(img_raw)
 

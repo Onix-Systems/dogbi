@@ -4,7 +4,7 @@ from .object_detection_api import get_objects
 import json
 import textwrap
 import math
-from django.utils import timezone
+from datetime import datetime
 from AI.find_translation import find_translation
 
 
@@ -112,7 +112,7 @@ def merge(inc_image, breed_image, user_id, match_percent, localize=False):
     new_im = new_im.convert("RGB")
 
     # saving everything and returning a file name
-    timecode = str(timezone.now()).replace(':', '-').replace('+', '-').replace('.', '-').replace(' ', '_')
+    timecode = str(datetime.microsecond).replace(':', '-').replace('+', '-').replace('.', '-').replace(' ', '_')
     new_path = breed_image + timecode + str(user_id)
     final_path = base + '/static/media/' + new_path + '.jpg'
     new_im.save(final_path)

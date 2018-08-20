@@ -36,6 +36,7 @@ dogbi/*
 .vscode/*
 venv/*
 downloaded_images/*
+const.py
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
