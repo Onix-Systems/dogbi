@@ -1,5 +1,5 @@
 # Dogbi - Telegram Breed Identifier Bot
-![Dogbi Logo](https://scontent-frt3-2.xx.fbcdn.net/v/t1.15752-9/38772043_246304856017369_1651153778415501312_n.png?_nc_cat=0&oh=610b73ec5b4b6b8c8de27610b6ddd32d&oe=5C00E6A8)
+![Dogbi Logo](AI/Logo@2x.png)
 > Just [send Dogbi a message](https://t.me/breed_identifier_bot) with a photo of a dog or a person and it will analyze the image and respond with an estimate of similarity. 
 
 * Fill out `const_empty.py` in telegram_bot directory and rename it to `const.py`</br>
