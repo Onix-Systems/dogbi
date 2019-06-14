@@ -55,7 +55,7 @@ class Singleton(type):
             return encode, decode
 
         def unfreeze_into_current_graph(model_path, tensor_names):
-            with tf.gfile.FastGFile(name=model_path, mode='rb') as f:
+            with tf.gfile.GFile(name=model_path, mode='rb') as f:
                 graph_def = tf.GraphDef()
                 graph_def.ParseFromString(f.read())
                 tf.import_graph_def(graph_def, name='')
