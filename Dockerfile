@@ -20,7 +20,7 @@ RUN apt-get install -y --fix-missing \
     pkg-config \
     python3-dev \
     python3-numpy \
-    software-properties-common \
+#    software-properties-common \
     zip \
     && apt-get clean && rm -rf /tmp/* /var/tmp/*
 
