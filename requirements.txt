@@ -22,7 +22,7 @@ hyperlink==19.0.0
 idna==2.8
 idna-ssl==1.1.0
 incremental==17.5.0
-joblib==0.13.2
+joblib==1.2.0
 Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.0
 Markdown==3.1.1
